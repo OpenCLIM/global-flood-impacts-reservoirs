@@ -1,0 +1,49 @@
+kind: M
+api_version: v1beta3
+metadata:
+  display_name: Global Urban_Flooding:Reservoirs
+  name: citycat-reservoirs
+  publisher: Newcastle University
+  summary: CityCAT is a tool for modelling, analysis and visualisation of surface water flooding. This model adds a reservoir water depth with a dam that fails.
+  source_code: https://github.com/OpenCLIM/citycat-dafni
+  description: >
+    CityCAT (City Catchment Analysis Tool) is a unique software tool for modelling, analysis and visualisation of surface water flooding.
+    CityCAT enables rapid assessment of combined pluvial and fluvial flood risk and allows assessment of the effects of different flood alleviation measures.
+    This DAFNI model generates input data for CityCAT, runs a simulation and then converts the output data.
+    All input data is assumed to be projected in [OSGB 1936](https://epsg.io/27700).
+    The domain is generated either using a boundary polygon or a combination of centroid location and size.
+    A rainfall total can either be specified directly or extracted from FUTURE-DRAINAGE based on a return period, duration and time horizon.
+    The storm profile is generated using the FEH summer profile.
+    The effects of buildings, green areas and inflow boundary conditions can be included.
+    Results are provided in a range of formats and a metadata JSON file is created which can be used to create DAFNI datasets.
+  contact_point_name: steve birkinshaw
+  contact_point_email: s.j.birkinshaw@ncl.ac.uk
+
+spec:
+  inputs:
+    dataslots:
+      - name: Boundary File
+        description:
+          A .gpkg or .shp file containing the boundary of the location of interest.
+        path: inputs/boundary/
+        required: false
+
+      - name: Reservoirs file
+        description:
+          This file should be shp format and the location of the reservoirs and their water depths specfied in "value".
+        path: inputs/reservoirs
+        required: false
+
+      - name: Parameters
+        description:
+          All input parameters and their values are stored in a csv file.
+        path: inputs/parameters/
+        required: false
+         
+        
+  outputs:
+    datasets:
+      - name: outputs/reservoirs/*
+        type: folder
+        description:
+          A gpgk of reservoir data for the city of interest.
